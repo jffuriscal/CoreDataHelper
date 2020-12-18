@@ -8,20 +8,21 @@
 import Foundation
 import CoreData
 
-public var coredata_name: String = ""
-public var coredata_extension: String = ""
-
 public class ObjectManager {
     public static let shared = ObjectManager()
-    let storeModel: DBModel
+    var storeModel: DBModel! = nil
     
-    private init() {
-        storeModel = DBModel()
-    }
+    private init() {}
     
     @available(iOS 10.0, *)
-    public func setContainer(_ container: NSPersistentContainer) {
-        storeModel.setContext(container: container)
+    public func setCoreDataModelV2(_ container: NSPersistentContainer) {
+        let context = container.newBackgroundContext()
+        storeModel = DBModel(context)
+    }
+    
+    public func setCoreDataModel(name: String, extension: String = "momd") {
+        let context = ObjectContext(name, `extension`)
+        storeModel = DBModel(context)
     }
     
     private func fetchRequest<T: NSManagedObject>(type: T.Type) -> NSFetchRequest<T> {

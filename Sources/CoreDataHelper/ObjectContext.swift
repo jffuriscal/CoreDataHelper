@@ -10,7 +10,7 @@ import CoreData
 
 public class ObjectContext: NSManagedObjectContext {
         
-    init() {
+    init(_ coredata_name: String, _ coredata_extension: String) {
         
         super.init(concurrencyType: .privateQueueConcurrencyType)
         

@@ -10,28 +10,15 @@ import CoreData
 
 public class DBModel: NSObject {
     
-    var context: NSManagedObjectContext! = nil
+    let context: NSManagedObjectContext
     
     @available(iOS 10.0, *)
     lazy var persistentContainer: NSPersistentContainer! = nil
     
     
     // MARK: - Core Data stack
-    override init() {
-        super.init()
-        if #available(iOS 10.0, *) {
-        }else {
-            setContext()
-        }
-    }
-    
-    private func setContext() {
-        context = ObjectContext()
-    }
-    
-    @available(iOS 10.0, *)
-    public func setContext(container: NSPersistentContainer) {
-        context = persistentContainer.newBackgroundContext()
+    init(_ context: NSManagedObjectContext) {
+        self.context = context
     }
     
     // MARK: - Core Data Saving support
